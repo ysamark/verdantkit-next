@@ -1,5 +1,6 @@
 import { ApiHandler, NextApiHandlerArg, NextApiHandlerFactory } from "~/types";
 
+import { NextResponse } from "next/server";
 import { handleMiddleware } from "./handleMiddleware";
 
 export const nextApiHandlerFactory = <ApiMiddlewareMapObject extends object>(
@@ -7,7 +8,8 @@ export const nextApiHandlerFactory = <ApiMiddlewareMapObject extends object>(
 ): NextApiHandlerFactory<ApiMiddlewareMapObject> => {
   const handler: NextApiHandlerFactory<ApiMiddlewareMapObject> =
     (...args) =>
-    async ({ request, props, response }) => {
+    async (request, props) => {
+      const response = NextResponse;
       const apiMiddlewares = args
         .slice(0, -1)
         .map((apiMiddleware) => String(apiMiddleware));

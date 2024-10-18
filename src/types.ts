@@ -46,7 +46,7 @@ export type NextApiHandlerFactory<
         ApiHandler<TNextApiHandler>
       ]
     | [ApiHandler<TNextApiHandler>]
-) => NextApiHandler;
+) => (request: NextRequest, props: NextApiProps) => NextApiResponse;
 
 export type MiddlewareActionProps = {
   request: NextRequest;
