@@ -26,7 +26,10 @@ export const nextApiHandlerFactory = <ApiMiddlewareMapObject extends object>(
           }
         );
 
-        if (middlewareHandlerResponse instanceof response) {
+        if (
+          typeof middlewareHandlerResponse === "object" &&
+          middlewareHandlerResponse instanceof response
+        ) {
           return middlewareHandlerResponse;
         }
       }
