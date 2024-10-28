@@ -1,14 +1,15 @@
 import { getObjectProp } from "@verdantkit/utils";
 import { NextRequest, NextResponse } from "next/server";
 
-import { MiddlewareAction, NextApiProps } from "~/types";
+import { MiddlewareAction, NextApiHandlerUtils, NextApiProps } from "~/types";
 // import { ApiMiddleware, apiMiddlewares } from "~/middlewares/api";
 // import { MiddlewareAction } from "~/Types/api";
 
-type MiddlewareHandlerProps = {
+type MiddlewareHandlerProps = NextApiHandlerUtils & {
   request: NextRequest;
   response: typeof NextResponse;
   props: NextApiProps;
+  body: object;
 };
 
 type DefaultApiMiddlewareMapObject = {

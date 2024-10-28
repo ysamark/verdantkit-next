@@ -1,4 +1,5 @@
 import { PathInternal } from "@verdantkit/utils";
+import { I18NConfig } from "next/dist/server/config-shared";
 import { NextRequest, NextResponse } from "next/server";
 import React from "react";
 
@@ -24,11 +25,50 @@ export type NextApiProps<Params = DefaultNextApiParams> = {
 
 export type NextApiResponse = NextResponse | Promise<NextResponse>;
 
-export type NextApiHandler<Params = DefaultNextApiParams> = (args: {
-  request: NextRequest;
-  response: typeof NextResponse;
-  props: NextApiProps<Params>;
-}) => NextApiResponse;
+type NextApiHandlerSuccessResponse = {
+  success: true;
+  error?: false;
+  data: object | Array<any> | string;
+};
+
+type NextApiHandlerErrorResponse = {
+  success?: false;
+  error: true;
+  data: undefined;
+};
+
+export type NextApiHandlerResponse =
+  | NextApiHandlerSuccessResponse
+  | NextApiHandlerErrorResponse;
+
+interface ResponseInit extends globalThis.ResponseInit {
+  nextConfig?: {
+    basePath?: string;
+    i18n?: I18NConfig;
+    trailingSlash?: boolean;
+  };
+  url?: string;
+}
+
+type NextApiHandlerJsonUtil = (
+  responseBody: NextApiHandlerResponse,
+  responseInit?: ResponseInit
+) => NextResponse;
+
+export type NextApiHandlerUtils = {
+  // format: NextApiHandlerFormatUtil;
+  json: NextApiHandlerJsonUtil;
+};
+
+export type NextApiHandler<Params = DefaultNextApiParams> = (
+  args: NextApiHandlerUtils & {
+    request: NextRequest;
+    response: typeof NextResponse;
+    props: NextApiProps<Params>;
+    body: object;
+  },
+  ...rest: Array<any>
+) => NextApiResponse;
 
 export type NextApiHandlerArg = NextApiHandler | NextApiHandler<any>;
 

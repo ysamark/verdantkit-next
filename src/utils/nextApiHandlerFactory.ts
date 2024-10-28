@@ -1,6 +1,8 @@
+import { NextResponse } from "next/server";
+
 import { ApiHandler, NextApiHandlerArg, NextApiHandlerFactory } from "~/types";
 
-import { NextResponse } from "next/server";
+import { getRequestBody } from "./getRequestBody";
 import { handleMiddleware } from "./handleMiddleware";
 
 export const nextApiHandlerFactory = <ApiMiddlewareMapObject extends object>(
@@ -16,6 +18,8 @@ export const nextApiHandlerFactory = <ApiMiddlewareMapObject extends object>(
       const apiHandler = args[
         -1 + args.length
       ] as ApiHandler<NextApiHandlerArg>;
+      const body = getRequestBody(request);
+      const apiHandlerArgs: Array<any> = [];
 
       for (const apiMiddleware of apiMiddlewares) {
         const middlewareHandlerResponse = await handleMiddleware(
@@ -25,6 +29,10 @@ export const nextApiHandlerFactory = <ApiMiddlewareMapObject extends object>(
             request,
             response,
             props,
+            body,
+            json(responseBody, responseInit) {
+              return NextResponse.json(responseBody, responseInit);
+            },
           }
         );
 
@@ -34,10 +42,25 @@ export const nextApiHandlerFactory = <ApiMiddlewareMapObject extends object>(
         ) {
           return middlewareHandlerResponse;
         }
+
+        if (middlewareHandlerResponse instanceof Array) {
+          apiHandlerArgs.push(...middlewareHandlerResponse);
+        }
       }
 
       try {
-        return await apiHandler({ request, props, response });
+        return await apiHandler(
+          {
+            request,
+            props,
+            response,
+            body,
+            json(responseBody, responseInit) {
+              return NextResponse.json(responseBody, responseInit);
+            },
+          },
+          ...apiHandlerArgs
+        );
       } catch (err) {
         return response.json(
           {
