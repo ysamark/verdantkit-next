@@ -33,7 +33,8 @@ export const nextApiHandlerFactory = <ApiMiddlewareMapObject extends object>(
             json(responseBody, responseInit) {
               return NextResponse.json(responseBody, responseInit);
             },
-          }
+          },
+          ...apiHandlerArgs
         );
 
         if (

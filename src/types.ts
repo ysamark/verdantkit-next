@@ -94,4 +94,7 @@ export type MiddlewareActionProps = {
   props: any;
 };
 
-export type MiddlewareAction = (props: MiddlewareActionProps) => any;
+export type MiddlewareAction = (
+  props: MiddlewareActionProps,
+  ...apiHandlerArgs: Array<any>
+) => any;

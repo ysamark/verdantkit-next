@@ -21,7 +21,8 @@ export const handleMiddleware = async <
 >(
   middlewareMapObject: ApiMiddlewareMapObject,
   middlewareRef: keyof ApiMiddlewareMapObject,
-  middlewareHandlerProps: MiddlewareHandlerProps
+  middlewareHandlerProps: MiddlewareHandlerProps,
+  ...apiHandlerArgs: Array<any>
 ) => {
   const apiMiddleware = getObjectProp<MiddlewareAction>(
     middlewareRef as never,
@@ -30,7 +31,7 @@ export const handleMiddleware = async <
 
   if (apiMiddleware) {
     try {
-      return await apiMiddleware(middlewareHandlerProps);
+      return await apiMiddleware(middlewareHandlerProps, ...apiHandlerArgs);
     } catch (err) {
       console.log(`Error: Running api middleware ${String(middlewareRef)}`);
 
