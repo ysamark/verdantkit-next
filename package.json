@@ -1,6 +1,6 @@
 {
   "name": "@verdantkit/next",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "main": "dist/index.js",
   "repository": "git@github.com:ysamark/verdantkit-next.git",
   "author": "Agostinho Sam'l <agostinhosaml832@gmail.com>",
