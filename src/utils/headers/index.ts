@@ -1,8 +1,8 @@
 import { Nullable } from "@verdantkit/utils";
 import { headers } from "next/headers";
 
-import { CookieValue } from "~/utils/cookie/types";
-import { readCookieValue } from "~/utils/cookie/utils";
+import { CookieValue } from "~/utils/cookies/types";
+import { readCookieValue } from "~/utils/cookies/utils";
 
 export type HeaderValue = CookieValue;
 

@@ -1,6 +1,6 @@
 import { Optional } from "@verdantkit/utils";
 
-import { CookieValue } from "~/utils/cookie/types";
+import { CookieValue } from "~/utils/cookies/types";
 
 export const readCookieValue = (value: Optional<CookieValue>): string => {
   switch (typeof value) {

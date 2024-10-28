@@ -2,7 +2,7 @@ import {
   CookieOptions,
   ResponseCookie,
   SetCookieUtilArguments,
-} from "~/utils/cookie/types";
+} from "~/utils/cookies/types";
 
 import { readCookieValue } from "./readCookieValue";
 
