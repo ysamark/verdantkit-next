@@ -1,4 +1,4 @@
-import { PathInternal } from "@verdantkit/utils";
+import { Nullable, PathInternal } from "@verdantkit/utils";
 import { I18NConfig } from "next/dist/server/config-shared";
 import { NextRequest, NextResponse } from "next/server";
 import React from "react";
@@ -65,7 +65,7 @@ export type NextApiHandler<Params = DefaultNextApiParams> = (
     request: NextRequest;
     response: typeof NextResponse;
     props: NextApiProps<Params>;
-    body: object;
+    body: Nullable<object>;
   },
   ...rest: Array<any>
 ) => NextApiResponse;

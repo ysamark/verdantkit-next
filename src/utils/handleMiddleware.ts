@@ -1,4 +1,4 @@
-import { getObjectProp } from "@verdantkit/utils";
+import { getObjectProp, Nullable } from "@verdantkit/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 import { MiddlewareAction, NextApiHandlerUtils, NextApiProps } from "~/types";
@@ -9,7 +9,7 @@ type MiddlewareHandlerProps = NextApiHandlerUtils & {
   request: NextRequest;
   response: typeof NextResponse;
   props: NextApiProps;
-  body: object;
+  body: Nullable<object>;
 };
 
 type DefaultApiMiddlewareMapObject = {
