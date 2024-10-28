@@ -18,7 +18,7 @@ export const nextApiHandlerFactory = <ApiMiddlewareMapObject extends object>(
       const apiHandler = args[
         -1 + args.length
       ] as ApiHandler<NextApiHandlerArg>;
-      const body = getRequestBody(request);
+      const body = await getRequestBody(request);
       const apiHandlerArgs: Array<any> = [];
 
       for (const apiMiddleware of apiMiddlewares) {
