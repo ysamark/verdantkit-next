@@ -16,7 +16,7 @@ export type PageProps<Params = DefaultNextApiParams> = {
 };
 
 export type DefaultNextApiParams = {
-  [key: string]: string;
+  [key: string]: string | Array<string>;
 };
 
 export type NextApiProps<Params = DefaultNextApiParams> = {
@@ -88,13 +88,17 @@ export type NextApiHandlerFactory<
     | [ApiHandler<TNextApiHandler>]
 ) => (request: NextRequest, props: NextApiProps) => NextApiResponse;
 
-export type MiddlewareActionProps = {
+export type MiddlewareActionProps<
+  Params extends DefaultNextApiParams = DefaultNextApiParams
+> = {
   request: NextRequest;
   response: typeof NextResponse;
-  props: any;
+  props: NextApiProps<Params>;
 };
 
-export type MiddlewareAction = (
-  props: MiddlewareActionProps,
+export type MiddlewareAction<
+  Params extends DefaultNextApiParams = DefaultNextApiParams
+> = (
+  props: MiddlewareActionProps<Params>,
   ...apiHandlerArgs: Array<any>
 ) => any;
